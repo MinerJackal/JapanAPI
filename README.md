@@ -1,3 +1,0 @@
-JapanAPI
-========
-Japanese Modder API
