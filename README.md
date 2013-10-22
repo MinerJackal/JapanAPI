@@ -1,5 +1,3 @@
 JapanAPI
 ========
-
-src
-test
+Japanese Modder API
