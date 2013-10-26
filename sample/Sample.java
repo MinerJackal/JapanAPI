@@ -60,7 +60,7 @@ public class Sample {
 
 	@Mod.Init
 	public void Init(FMLInitializationEvent event) {
-		SampleBlock.blockID = 4000;
+		SampleBlock.blockID = 4040;
 		for(int i = 0; i < 4; i++) {
 			BLOCK_Sample[i] = new SampleBlock(i);
 			GameRegistry.registerBlock(BLOCK_Sample[i], BLOCK_Sample[i].getUnlocalizedName());

@@ -113,7 +113,10 @@ public class CommonRecipeHandler {
 				char targetChar2 = targetChar;
 				line = line.replace(targetChar2, replaceChar);
 
-				if(inputItem.getItemDamage() == 32767) inputItem.setItemDamage(-1);
+				if(inputItem.getItemDamage() == 32767) {
+					inputItem.setItemDamage(-1);
+					retFlag = true;
+				}
 
 				String name = OreDictionary.getOreName(OreDictionary.getOreID(inputItem));
 
@@ -123,7 +126,6 @@ public class CommonRecipeHandler {
 					arrayTmp.add(inputItem.copy());		//アイテムそのまま
 				} else {	//該当あり
 					arrayTmp.add(name);					//鉱石辞書登録名
-					retFlag = true;
 				}
 
 				targetChar2++;

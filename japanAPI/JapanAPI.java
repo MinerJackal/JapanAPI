@@ -143,7 +143,7 @@ public class JapanAPI {
 			}
 		}
 
-		DeleteCraftingRecipe(remItemStack.toArray(new ItemStack[remItemStack.size()]));
+//		DeleteCraftingRecipe(remItemStack.toArray(new ItemStack[remItemStack.size()]));
 
 		for(ShapedOreRecipe recipe : oreRecipe.toArray(new ShapedOreRecipe[oreRecipe.size()])) {
 			GameRegistry.addRecipe(recipe);
