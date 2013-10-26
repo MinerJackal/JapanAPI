@@ -27,6 +27,7 @@ public class CommonRecipeHandler {
 	public static ShapedOreRecipe ConversionShapedRecipe(ShapedRecipes recipeFrom) {
 		if(recipeFrom instanceof ShapedNotConversionResipe) return null;
 
+		boolean retFlag = false;
 		int width = recipeFrom.recipeWidth;
 		int height = recipeFrom.recipeHeight;
 
@@ -65,13 +66,14 @@ public class CommonRecipeHandler {
 				if(!flag) {
 					line += String.valueOf(i);
 					array1.put(inputItem.copy(), String.valueOf(i));
-					String name = OreDictionary.getOreName(OreDictionary.getOreID(new ItemStack(inputItem.itemID, 1, 0)));
+					String name = OreDictionary.getOreName(OreDictionary.getOreID(new ItemStack(inputItem.itemID, 1, inputItem.getItemDamage())));
 					arrayTmp.add(String.valueOf(i).charAt(0));
 					if(name.matches("Unknown")) {
 						arrayTmp.add(inputItem.copy());
 					} else {
 						arrayTmp.add(name);
 						array2.put(inputItem.copy(), name);
+						retFlag = true;
 					}
 				}
 			}
@@ -79,10 +81,80 @@ public class CommonRecipeHandler {
 		}
 		arrayTmp.add(0, line);
 
+		if(!retFlag) return null;
 
 		ShapedOreRecipe ret = new ShapedOreRecipe(output, arrayTmp.toArray(new Object[arrayTmp.size()]));
 
 		return ret;
 	}
 
+	public static ShapedOreRecipe ConversionShapedRecipeV2(ShapedRecipes recipeFrom) {
+		if(recipeFrom instanceof ShapedNotConversionResipe) return null;
+
+		boolean retFlag = false;
+		int width = recipeFrom.recipeWidth;
+		int height = recipeFrom.recipeHeight;
+
+		ItemStack[] input = recipeFrom.recipeItems;
+		boolean[] flags = new boolean[recipeFrom.getRecipeSize()];
+		ItemStack output = recipeFrom.getRecipeOutput();
+
+		String line = "0123456789";	//レシピ位置
+		ArrayList<Object> arrayTmp = new ArrayList<Object>();
+		int i = 0;
+		char replaceChar = 'a';
+		char targetChar = '0';
+
+		for(ItemStack inputItem : input) {
+			if(inputItem == null) {
+				line = line.replace(targetChar, ' ');
+			} else if(!flags[i]) {	//空白以外でまだ探査していない部分
+				flags[i] = true;
+				char targetChar2 = targetChar;
+				line = line.replace(targetChar2, replaceChar);
+
+				if(inputItem.getItemDamage() == 32767) inputItem.setItemDamage(-1);
+
+				String name = OreDictionary.getOreName(OreDictionary.getOreID(inputItem));
+
+				arrayTmp.add(replaceChar);
+
+				if(name.matches("Unknown")) {	//該当なし
+					arrayTmp.add(inputItem.copy());		//アイテムそのまま
+				} else {	//該当あり
+					arrayTmp.add(name);					//鉱石辞書登録名
+					retFlag = true;
+				}
+
+				targetChar2++;
+				//反復処理
+				for(int j = i + 1; j < input.length; j++, targetChar2++) {
+					if(flags[j] || input[j] == null) continue;
+					if(input[j].isItemEqual(inputItem)) {
+						line = line.replace(targetChar2, replaceChar);
+						flags[j] = true;
+					} else if(!name.matches("Unknown")) {
+						if(input[j].getItemDamage() == 32767) input[j].setItemDamage(-1);
+						if(name.matches(OreDictionary.getOreName(OreDictionary.getOreID(input[j])))) {
+							line = line.replace(targetChar2, replaceChar);
+							flags[j] = true;
+						}
+					}
+				}
+				replaceChar++;
+			}
+			i++;
+			targetChar++;
+		}
+
+		arrayTmp.add(0, line.substring(0, 3));
+		arrayTmp.add(1, line.substring(3, 6));
+		arrayTmp.add(2, line.substring(6, 9));
+
+		if(!retFlag) return null;
+
+		ShapedOreRecipe ret = new ShapedOreRecipe(output, arrayTmp.toArray(new Object[arrayTmp.size()]));
+
+		return ret;
+	}
 }
