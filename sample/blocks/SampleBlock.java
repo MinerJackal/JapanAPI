@@ -10,10 +10,10 @@ import net.minecraft.world.World;
 
 public class SampleBlock extends Block {
 
-	public static int blockID;
+	public static int[] blockID = new int[4];
 
 	public SampleBlock(int id) {
-		super(blockID + id, Material.rock);
+		super(blockID[id], Material.rock);
 		setStepSound(soundStoneFootstep);
 		setUnlocalizedName("Sample:sample" + id);
 		setCreativeTab(Sample.TABS_sample);

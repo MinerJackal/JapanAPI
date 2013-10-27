@@ -24,7 +24,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @Mod(
 		modid = "Sample",
 		name = "Sample 1.5.2",
-		version = "0.0.1")
+		version = "0.0.2")
 
 @NetworkMod(
 		clientSideRequired = true,
@@ -49,6 +49,10 @@ public class Sample {
 		try
 		{
 			cfg.load();
+			SampleBlock.blockID[0] = cfg.getBlock("Sample 0", 4040).getInt();
+			SampleBlock.blockID[1] = cfg.getBlock("Sample 1", 4041).getInt();
+			SampleBlock.blockID[2] = cfg.getBlock("Sample 2", 4042).getInt();
+			SampleBlock.blockID[3] = cfg.getBlock("Sample 3", 4043).getInt();
 
 		} catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, "Error Message");
@@ -60,7 +64,6 @@ public class Sample {
 
 	@Mod.Init
 	public void Init(FMLInitializationEvent event) {
-		SampleBlock.blockID = 4040;
 		for(int i = 0; i < 4; i++) {
 			BLOCK_Sample[i] = new SampleBlock(i);
 			GameRegistry.registerBlock(BLOCK_Sample[i], BLOCK_Sample[i].getUnlocalizedName());
