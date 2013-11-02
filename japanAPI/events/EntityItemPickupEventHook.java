@@ -152,10 +152,13 @@ public class EntityItemPickupEventHook {
 			}
 		}
 
-		event.setResult(Result.ALLOW);	//イベントが成功した
-		event.setCanceled(false);		//イベント継続中止
-		player.inventory.addItemStackToInventory(pickupItem);	//インベントリへアイテムを挿入
-		event.item.setDead();			//これがないと、アイテムが残る？（たぶん）
+		if(pickupItem.stackSize > 0 && player.inventory.addItemStackToInventory(pickupItem)) {	//インベントリへアイテムを挿入
+			if(pickupItem.stackSize <= 0)
+				event.item.setDead();			//これがないと、アイテムが残る？（たぶん）
+			event.setResult(Result.ALLOW);	//イベントが成功した
+			event.setCanceled(false);		//イベント継続中止
+			
+		}
 
 	}
 

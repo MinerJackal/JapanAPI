@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import mods.japanAPI.events.EntityItemPickupEventHook;
 import mods.japanAPI.items.AutoConversionSymbolItem;
 import mods.japanAPI.recipes.CommonRecipeHandler;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -32,7 +33,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @Mod(
 		modid = "JapanAPI",
 		name = "JapanAPI 1.5.2",
-		version = "0.0.3-alpha"
+		version = "0.0.4-alpha"
 		)
 @NetworkMod(
 		clientSideRequired = true,
@@ -111,7 +112,7 @@ public class JapanAPI {
 
 	@Mod.Init
 	public void Init(FMLInitializationEvent event) {
-		ITEM_autoConversionSymbol = new AutoConversionSymbolItem(AutoConversionSymbolItem.itemID);
+		ITEM_autoConversionSymbol = new AutoConversionSymbolItem(AutoConversionSymbolItem.itemID).setCreativeTab(CreativeTabs.tabTools);
 		GameRegistry.registerItem(ITEM_autoConversionSymbol, "AutoConversionSymbol");
 		LanguageRegistry.addName(ITEM_autoConversionSymbol, "AutoConversion Symbol");
 		LanguageRegistry.instance().addNameForObject(ITEM_autoConversionSymbol, "ja_JP",
