@@ -33,7 +33,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @Mod(
 		modid = "JapanAPI",
 		name = "JapanAPI 1.5.2",
-		version = "0.0.4-alpha"
+		version = "0.0.6-alpha"
 		)
 @NetworkMod(
 		clientSideRequired = true,

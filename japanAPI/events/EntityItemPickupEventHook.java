@@ -8,10 +8,12 @@ import java.util.Map.Entry;
 import mods.japanAPI.items.IAutoConversionSymbol;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.storagebox.ItemStorageBox;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.Loader;
 
 /**
  * プレイヤーがアイテムを拾った時のイベント
@@ -157,7 +159,28 @@ public class EntityItemPickupEventHook {
 				event.item.setDead();			//これがないと、アイテムが残る？（たぶん）
 			event.setResult(Result.ALLOW);	//イベントが成功した
 			event.setCanceled(false);		//イベント継続中止
-			
+
+		} else if(Loader.isModLoaded("mod_StorageBox")) {
+			ItemStack[] inventory = player.inventory.mainInventory;
+			int size = inventory.length;
+
+			for (int i = 0; i < size; i++) {
+				if (inventory[i] != null && inventory[i].getItem() instanceof ItemStorageBox) {
+					if (ItemStorageBox.isAutoCollect(inventory[i])) {
+						ItemStack storageStack = ItemStorageBox.peekItemStackAll(inventory[i]);
+
+						if (storageStack != null && pickupItem.isItemEqual(storageStack)) {
+							ItemStorageBox.addItemStack(inventory[i], pickupItem);
+							pickupItem.stackSize = 0;
+							break;
+						}
+					}
+				}
+			}
+			if(pickupItem.stackSize <= 0)
+				event.item.setDead();			//これがないと、アイテムが残る？（たぶん）
+			event.setResult(Result.ALLOW);	//イベントが成功した
+			event.setCanceled(false);		//イベント継続中止
 		}
 
 	}
