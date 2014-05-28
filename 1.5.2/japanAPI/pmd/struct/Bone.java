@@ -1,16 +1,17 @@
 package mods.japanAPI.pmd.struct;
 
+import mods.japanAPI.pmd.CommonUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-
-import mods.japanAPI.pmd.CommonUtil;
 
 /**
  * ボーンデータ 構造体
  * @author ArabikiTouhu
  * @version 0.01
  */
-public class Bone extends CommonUtil {
+public class Bone extends CommonUtil
+{
 
 	/**
 	 * MMDモデル ファイル読み込み(*.pmx)

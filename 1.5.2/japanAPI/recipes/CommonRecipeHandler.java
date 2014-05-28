@@ -1,21 +1,22 @@
 package mods.japanAPI.recipes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * 共通レシピハンドラ
  * @author ArabikiTouhu
  * @version 0.0.1
  */
-public class CommonRecipeHandler {
+public class CommonRecipeHandler
+{
 
 	private CommonRecipeHandler() { }
 
@@ -24,8 +25,10 @@ public class CommonRecipeHandler {
 	 * @param recipeFrom ShapedRecipe
 	 * @return ShapedOreRecipe
 	 */
-	public static ShapedOreRecipe ConversionShapedRecipe(ShapedRecipes recipeFrom) {
-		if(recipeFrom instanceof ShapedNotConversionResipe) return null;
+	public static ShapedOreRecipe ConversionShapedRecipe(ShapedRecipes recipeFrom)
+    {
+		if(recipeFrom instanceof ShapedNotConversionResipe)
+            return null;
 
 		boolean retFlag = false;
 		int width = recipeFrom.recipeWidth;
@@ -39,24 +42,32 @@ public class CommonRecipeHandler {
 		Map<ItemStack, String> array2 = new HashMap<ItemStack, String>();
 		ArrayList<Object> arrayTmp = new ArrayList<Object>();
 		int i = 0;
-		for(ItemStack inputItem : input) {
+		for(ItemStack inputItem : input)
+        {
 			//空白の場合
-			if(inputItem == null) {
+			if(inputItem == null)
+            {
 				line += " ";
-			} else {
+			} else
+            {
 				boolean flag = false;
-				for(Entry<ItemStack, String> arg : array1.entrySet()) {
-					if(arg.getKey().isItemEqual(inputItem)) {
+				for(Entry<ItemStack, String> arg : array1.entrySet())
+                {
+					if(arg.getKey().isItemEqual(inputItem))
+                    {
 						flag = true;
 						line += arg.getValue();
 						String name = null;
-						for(Entry<ItemStack, String> entry : array2.entrySet()) {
-							if(entry.getKey().isItemEqual(inputItem)) {
+						for(Entry<ItemStack, String> entry : array2.entrySet())
+                        {
+							if(entry.getKey().isItemEqual(inputItem))
+                            {
 								name = entry.getValue();
 								break;
 							}
 						}
-						if(name == null || name.matches("Unknown")) {
+						if(name == null || name.matches("Unknown"))
+                        {
 							arrayTmp.add(arg.getValue().charAt(0));
 							arrayTmp.add(inputItem.copy());
 						}
@@ -68,9 +79,11 @@ public class CommonRecipeHandler {
 					array1.put(inputItem.copy(), String.valueOf(i));
 					String name = OreDictionary.getOreName(OreDictionary.getOreID(new ItemStack(inputItem.itemID, 1, inputItem.getItemDamage())));
 					arrayTmp.add(String.valueOf(i).charAt(0));
-					if(name.matches("Unknown")) {
+					if(name.matches("Unknown"))
+                    {
 						arrayTmp.add(inputItem.copy());
-					} else {
+					} else
+                    {
 						arrayTmp.add(name);
 						array2.put(inputItem.copy(), name);
 						retFlag = true;
@@ -88,7 +101,8 @@ public class CommonRecipeHandler {
 		return ret;
 	}
 
-	public static ShapedOreRecipe ConversionShapedRecipeV2(ShapedRecipes recipeFrom) {
+	public static ShapedOreRecipe ConversionShapedRecipeV2(ShapedRecipes recipeFrom)
+    {
 		if(recipeFrom instanceof ShapedNotConversionResipe) return null;
 
 		boolean retFlag = false;
@@ -105,15 +119,18 @@ public class CommonRecipeHandler {
 		char replaceChar = 'a';
 		char targetChar = '0';
 
-		for(ItemStack inputItem : input) {
-			if(inputItem == null) {
+		for(ItemStack inputItem : input)
+        {
+			if(inputItem == null)
+            {
 				line = line.replace(targetChar, ' ');
 			} else if(!flags[i]) {	//空白以外でまだ探査していない部分
 				flags[i] = true;
 				char targetChar2 = targetChar;
 				line = line.replace(targetChar2, replaceChar);
 
-				if(inputItem.getItemDamage() == 32767) {
+				if(inputItem.getItemDamage() == 32767)
+                {
 					inputItem.setItemDamage(-1);
 					retFlag = true;
 				}
@@ -130,12 +147,15 @@ public class CommonRecipeHandler {
 
 				targetChar2++;
 				//反復処理
-				for(int j = i + 1; j < input.length; j++, targetChar2++) {
+				for(int j = i + 1; j < input.length; j++, targetChar2++)
+                {
 					if(flags[j] || input[j] == null) continue;
-					if(input[j].isItemEqual(inputItem)) {
+					if(input[j].isItemEqual(inputItem))
+                    {
 						line = line.replace(targetChar2, replaceChar);
 						flags[j] = true;
-					} else if(!name.matches("Unknown")) {
+					} else if(!name.matches("Unknown"))
+                    {
 						if(input[j].getItemDamage() == 32767) input[j].setItemDamage(-1);
 						if(name.matches(OreDictionary.getOreName(OreDictionary.getOreID(input[j])))) {
 							line = line.replace(targetChar2, replaceChar);

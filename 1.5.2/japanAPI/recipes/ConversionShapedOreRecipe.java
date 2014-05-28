@@ -1,5 +1,6 @@
 package mods.japanAPI.recipes;
 
-public class ConversionShapedOreRecipe {
+public class ConversionShapedOreRecipe
+{
 
 }

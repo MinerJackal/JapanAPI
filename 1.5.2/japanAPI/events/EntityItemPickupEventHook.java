@@ -1,10 +1,5 @@
 package mods.japanAPI.events;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import mods.japanAPI.JapanAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,13 +7,18 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 /**
  * プレイヤーがアイテムを拾った時のイベント
  * @author ArabikiTouhu
  * @version 0.0.2
  */
-public class EntityItemPickupEventHook {
-
+public class EntityItemPickupEventHook
+{
 	/** キーワードリスト */
 	protected static ArrayList<String> conversionKeyWordList = new ArrayList<String>();
 	/** 変換済み対応表 */
@@ -48,7 +48,8 @@ public class EntityItemPickupEventHook {
 	/**
 	 * 初期化(デフォルト：キーワードに「ore」「ingot」を追加する)
 	 */
-	protected void InitEntityItemPickupEventHook() {
+	protected void InitEntityItemPickupEventHook()
+    {
 
 		addConversionKeyWordList("ore");
 		//<Add : ver0.0.2>
@@ -66,7 +67,8 @@ public class EntityItemPickupEventHook {
 	 * @param convFrom 変換対象アイテム
 	 * @return 変換後アイテム（該当なしの場合、null）
 	 */
-	protected ItemStack searchToList(ItemStack convFrom) {
+	protected ItemStack searchToList(ItemStack convFrom)
+    {
 		ItemStack toItem = null;
 		for(Map.Entry<ItemStack, ItemStack> conversion : conversionFromToList.entrySet()) {
 			if(conversion.getKey().isItemEqual(convFrom)) {
@@ -140,10 +142,12 @@ public class EntityItemPickupEventHook {
 	 * @param fromItem 変換対象アイテム
 	 * @return 変換後アイテム（未変換の場合は、Nullを返す）
 	 */
-	private ItemStack toAutoConversion(ItemStack fromItem) {
+	private ItemStack toAutoConversion(ItemStack fromItem)
+    {
 		//インベントリ内にある場合、自動変換開始
 		ItemStack toItem = searchToList(fromItem);	//対応表の確認
-		if(toItem == null) {
+		if(toItem == null)
+        {
 			//対応表不一致の場合
 			String dictName = OreDictionary.getOreName(OreDictionary.getOreID(fromItem));	//鉱石辞書から登録名の取得
 

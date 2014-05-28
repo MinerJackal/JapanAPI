@@ -1,18 +1,19 @@
 package mods.japanAPI.recipes;
 
-import java.util.ArrayList;
-
 import net.minecraftforge.liquids.LiquidStack;
 
+import java.util.ArrayList;
 
-public class LiquidStackOnlyRecipe implements Comparable<LiquidStackOnlyRecipe>{
 
+public class LiquidStackOnlyRecipe implements Comparable<LiquidStackOnlyRecipe>
+{
 	protected final ArrayList<LiquidStack> ingredientList = new ArrayList<LiquidStack>();
 
 	protected final LiquidStack result;
 
 
-	public LiquidStackOnlyRecipe(LiquidStack result, LiquidStack... ingredientList) {
+	public LiquidStackOnlyRecipe(LiquidStack result, LiquidStack... ingredientList)
+    {
 		this.result = result;
 
 		this.ingredientList.clear();
@@ -24,16 +25,20 @@ public class LiquidStackOnlyRecipe implements Comparable<LiquidStackOnlyRecipe>{
 	public ArrayList<LiquidStack> getIngredientList() { return this.ingredientList; }
 	public LiquidStack getResult() { return this.result; }
 
-	public boolean matches(LiquidStack... liquidStacks) {
+	public boolean matches(LiquidStack... liquidStacks)
+    {
 		if(liquidStacks == null) return false;
 		if(liquidStacks.length != this.ingredientList.size()) return false;
 
 		boolean[] checks = new boolean[this.ingredientList.size()];
 		LiquidStack[] liquids = liquidStacks.clone();
-		for(int i = 0; i < this.ingredientList.size(); i++) {
+		for(int i = 0; i < this.ingredientList.size(); i++)
+        {
 			int j = 0;
-			for(LiquidStack liquid : liquids) {
-				if(liquid != null && this.ingredientList.get(i).isLiquidEqual(liquid) && liquid.amount == this.ingredientList.get(i).amount) {
+			for(LiquidStack liquid : liquids)
+            {
+				if(liquid != null && this.ingredientList.get(i).isLiquidEqual(liquid) && liquid.amount == this.ingredientList.get(i).amount)
+                {
 					checks[i] = true;
 					liquids[j] = null;
 					break;
@@ -47,16 +52,20 @@ public class LiquidStackOnlyRecipe implements Comparable<LiquidStackOnlyRecipe>{
 
 	}
 	@Override
-	public int compareTo(LiquidStackOnlyRecipe recipe) {
+	public int compareTo(LiquidStackOnlyRecipe recipe)
+    {
 		ArrayList<LiquidStack> recipeLiquids = recipe.getIngredientList();
 		if(recipeLiquids.size() != this.ingredientList.size()) return -1;
 
 		boolean[] checks = new boolean[this.ingredientList.size()];
 		LiquidStack[] liquids = ((LiquidStack[]) recipeLiquids.toArray()).clone();
-		for(int i = 0; i < this.ingredientList.size(); i++) {
+		for(int i = 0; i < this.ingredientList.size(); i++)
+        {
 			int j = 0;
-			for(LiquidStack liquid : liquids) {
-				if(liquid != null && this.ingredientList.get(i).isLiquidEqual(liquid) && liquid.amount == this.ingredientList.get(i).amount) {
+			for(LiquidStack liquid : liquids)
+            {
+				if(liquid != null && this.ingredientList.get(i).isLiquidEqual(liquid) && liquid.amount == this.ingredientList.get(i).amount)
+                {
 					checks[i] = true;
 					liquids[j] = null;
 					break;

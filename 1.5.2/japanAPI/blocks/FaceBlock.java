@@ -16,26 +16,31 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author ArabikiTouhu
  * @version 0.0.1
  */
-public class FaceBlock extends Block {
+public class FaceBlock extends Block
+{
 
-	public FaceBlock(int blockID, Material material) {
+	public FaceBlock(int blockID, Material material)
+    {
 		super(blockID, material);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIcon(int side, int meta) {
+	public Icon getIcon(int side, int meta)
+    {
 		return super.getIcon(side, meta);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerIcons(IconRegister iconRegister)
+    {
 		super.registerIcons(iconRegister);
 	}
 
 	@Override
-	public void onBlockAdded(World world, int x, int y, int z) {
+	public void onBlockAdded(World world, int x, int y, int z)
+    {
 		super.onBlockAdded(world, x, y, z);
 		this.setDefaultDirection(world, x, y, z);
 	}
@@ -47,7 +52,8 @@ public class FaceBlock extends Block {
 	 * @param y ｙ座標
 	 * @param z ｚ座標
 	 */
-	protected void setDefaultDirection(World world, int x, int y, int z) {
+	protected void setDefaultDirection(World world, int x, int y, int z)
+    {
 		if (!world.isRemote)
 		{
 			int l = world.getBlockId(x, y, z - 1);
@@ -77,16 +83,21 @@ public class FaceBlock extends Block {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving, ItemStack itemStack) {
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving, ItemStack itemStack)
+    {
 		int l = MathHelper.floor_double((double)(entityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
-		if (l == 0) {
+		if (l == 0)
+        {
 			world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-		} else if (l == 1) {
+		} else if (l == 1)
+        {
 			world.setBlockMetadataWithNotify(x, y, z, 5, 2);
-		} else  if (l == 2) {
+		} else  if (l == 2)
+        {
 			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-		} else if (l == 3) {
+		} else if (l == 3)
+        {
 			world.setBlockMetadataWithNotify(x, y, z, 4, 2);
 		}
 	}
